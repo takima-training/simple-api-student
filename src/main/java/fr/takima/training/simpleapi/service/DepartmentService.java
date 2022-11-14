@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class DepartmentService {
-    private DepartmentDAO departmentDAO;
+    private final DepartmentDAO departmentDAO;
 
     @Autowired
     public DepartmentService(DepartmentDAO departmentDAO) {
@@ -21,7 +21,7 @@ public class DepartmentService {
             throw new IllegalArgumentException("The department name must not be null or empty.");
         }
 
-        return this.departmentDAO.getDepartmentByName(departmentName);
+        return this.departmentDAO.findDepartmentByName(departmentName);
     }
 
     public List<Department> getDepartments() {

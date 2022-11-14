@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class StudentService {
-    private StudentDAO studentDAO;
+    private final StudentDAO studentDAO;
 
     @Autowired
     public StudentService(StudentDAO studentDAO) {
@@ -33,7 +33,7 @@ public class StudentService {
     public Student getStudentById(long id) {
         validateStudentId(id);
 
-        return studentDAO.getById(id);
+        return studentDAO.findById(id);
     }
 
     public Student addStudent(Student student) {

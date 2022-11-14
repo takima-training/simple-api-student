@@ -13,8 +13,8 @@ import java.util.Optional;
 @CrossOrigin
 @RequestMapping(value = "/departments")
 public class DepartmentController {
-    private DepartmentService departmentService;
-    private StudentService studentService;
+    private final DepartmentService departmentService;
+    private final StudentService studentService;
 
     @Autowired
     public DepartmentController(DepartmentService departmentService, StudentService studentService) {
@@ -30,7 +30,7 @@ public class DepartmentController {
     @GetMapping("/{departmentName}/students")
     public ResponseEntity<Object> getDepartmentList(@PathVariable(name="departmentName") String name) {
         Optional<Department> optionalDepartment = Optional.ofNullable(this.departmentService.getDepartmentByName(name));
-        if (!optionalDepartment.isPresent()) {
+        if (optionalDepartment.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -40,7 +40,7 @@ public class DepartmentController {
     @GetMapping("/{departmentName}")
     public ResponseEntity<Object> getDepartmentByName(@PathVariable(name="departmentName") String name) {
         Optional<Department> optionalDepartment = Optional.ofNullable(this.departmentService.getDepartmentByName(name));
-        if (!optionalDepartment.isPresent()) {
+        if (optionalDepartment.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -50,7 +50,7 @@ public class DepartmentController {
     @GetMapping("/{departmentName}/count")
     public ResponseEntity<Object> getDepartmentCountByName(@PathVariable(name="departmentName") String name) {
         Optional<Department> optionalDepartment = Optional.ofNullable(this.departmentService.getDepartmentByName(name));
-        if (!optionalDepartment.isPresent()) {
+        if (optionalDepartment.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
