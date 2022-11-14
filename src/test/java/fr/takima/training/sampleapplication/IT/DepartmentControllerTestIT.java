@@ -2,12 +2,10 @@ package fr.takima.training.sampleapplication.IT;
 
 import fr.takima.training.simpleapi.SimpleApiApplication;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -16,9 +14,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes={SimpleApiApplication.class})
-public class DepartmentControllerTestIT {
+@SpringBootTest(classes = {SimpleApiApplication.class})
+class DepartmentControllerTestIT {
     @Autowired
     private MockMvc mockMvc;
 

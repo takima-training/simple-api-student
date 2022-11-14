@@ -10,5 +10,5 @@ import java.util.List;
 public interface StudentDAO extends JpaRepository<Student, Long> {
     List<Student> findStudentsByDepartment_Name(String departmentName);
     int countAllByDepartment_Name(String departmentName);
-    Student getById(long id);
+    Student findById(long id);
 }

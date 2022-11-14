@@ -2,13 +2,11 @@ package fr.takima.training.sampleapplication.IT;
 
 import fr.takima.training.simpleapi.SimpleApiApplication;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -16,9 +14,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @AutoConfigureMockMvc
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes={SimpleApiApplication.class})
-public class StudentControllerTestIT {
+@SpringBootTest(classes = {SimpleApiApplication.class})
+class StudentControllerTestIT {
 
     @Autowired
     private MockMvc mockMvc;
@@ -45,17 +42,19 @@ public class StudentControllerTestIT {
     @Test
     @Sql({"/InsertData.sql"})
     void testPostStudent() throws Exception {
-        String body = "{\n" +
-                "    \"firstname\": \"Didier\",\n" +
-                "    \"lastname\": \"Deschamps\",\n" +
-                "    \"department\": {\n" +
-                "        \"id\": 4,\n" +
-                "        \"name\": \"GC\"\n" +
-                "    }\n" +
-                "}";
+        String body = """
+                {
+                    "firstname": "Didier",
+                    "lastname": "Deschamps",
+                    "department": {
+                        "id": 4,
+                        "name": "GC"
+                    }
+                }
+                """;
         mockMvc.perform(post("/students/")
-                .content(body)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(header().exists("location"));
     }
@@ -63,29 +62,33 @@ public class StudentControllerTestIT {
     @Test
     @Sql({"/InsertData.sql"})
     void testPostStudentWithoutLastName() throws Exception {
-        String body = "{\n" +
-                "    \"firstname\": \"Didier\",\n" +
-                "    \"department\": {\n" +
-                "        \"id\": 4,\n" +
-                "        \"name\": \"GC\"\n" +
-                "    }\n" +
-                "}";
+        String body = """
+                {
+                    "firstname": "Didier",
+                    "department": {
+                        "id": 4,
+                        "name": "GC"
+                    }
+                }
+                """;
         mockMvc.perform(post("/students/")
-                .content(body)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     @Sql({"/InsertData.sql"})
     void testPostStudentWithoutDepartment() throws Exception {
-        String body = "{\n" +
-                "    \"lastname\": \"Didier\",\n" +
-                "    }\n" +
-                "}";
+        String body = """
+                {
+                    "lastname": "Didier",
+                    }
+                }
+                """;
         mockMvc.perform(post("/students/")
-                .content(body)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
 
@@ -99,17 +102,19 @@ public class StudentControllerTestIT {
                 .andExpect(jsonPath("department.id", equalTo(9)))
                 .andExpect(jsonPath("department.name", equalTo("PERF-I")));
 
-        String body = "{\n" +
-                "    \"firstname\": \"Francis\",\n" +
-                "    \"lastname\": \"Huster\",\n" +
-                "    \"department\": {\n" +
-                "        \"id\": 1,\n" +
-                "        \"name\": \"ASI\"\n" +
-                "    }\n" +
-                "}";
+        String body = """
+                {
+                    "firstname": "Francis",
+                    "lastname": "Huster",
+                    "department": {
+                        "id": 1,
+                        "name": "ASI"
+                    }
+                }
+                """;
         mockMvc.perform(put("/students/11")
-                .content(body)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", equalTo(11)))
                 .andExpect(jsonPath("firstname", equalTo("Francis")))

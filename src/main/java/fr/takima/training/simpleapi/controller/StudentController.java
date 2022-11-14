@@ -14,7 +14,7 @@ import java.util.Optional;
 @CrossOrigin
 @RequestMapping(value = "/students")
 public class StudentController {
-    private StudentService studentService;
+    private final StudentService studentService;
 
     @Autowired
     public StudentController(StudentService studentService) {
@@ -29,7 +29,7 @@ public class StudentController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<Object> getStudentById(@PathVariable(name="id") long id) {
         Optional<Student> studentOptional = Optional.ofNullable(this.studentService.getStudentById(id));
-        if (!studentOptional.isPresent()) {
+        if (studentOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return  ResponseEntity.ok(studentOptional.get());
@@ -52,7 +52,7 @@ public class StudentController {
     @PutMapping(value = "/{id}")
     public ResponseEntity<Object> updateStudent(@RequestBody Student student, @PathVariable(name="id") long id) {
         Optional<Student> studentOptional = Optional.ofNullable(studentService.getStudentById(id));
-        if (!studentOptional.isPresent()) {
+        if (studentOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -64,7 +64,7 @@ public class StudentController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Object> removeStudent(@PathVariable(name="id") long id) {
         Optional<Student> studentOptional = Optional.ofNullable(studentService.getStudentById(id));
-        if (!studentOptional.isPresent()) {
+        if (studentOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         this.studentService.removeStudentById(id);
