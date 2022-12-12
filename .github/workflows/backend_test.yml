@@ -46,7 +46,7 @@ jobs:
       
       - name: Build_and_test_with_Maven
         id: Build_and_test_with_Maven
-        run: mvn -B verify sonar:sonar -Dsonar.projectKey= ${{inputs.project_key}} -Dsonar.organization=${{inputs.organization}} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ${{inputs.pom_path}}
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=${{inputs.project_key}} -Dsonar.organization=${{inputs.organization}} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ${{inputs.pom_path}}
             #  mvn -B verify sonar:sonar -Dsonar.projectKey=JiaenLiu123_simple-api-student -Dsonar.organization=jiaenliu123 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./pom.xml
 
       # - name: Set output

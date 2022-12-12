@@ -11,7 +11,7 @@ jobs:
   back_end_tests:
     uses: ./.github/workflows/backend_test.yml
     with:
-      # project_key: 'JiaenLiu123_simple-api-student'
+      project_key: 'JiaenLiu123_simple-api-student'
       organization: 'jiaenliu123'
       pom_path: './pom.xml'
     secrets:
