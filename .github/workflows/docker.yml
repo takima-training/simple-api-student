@@ -27,6 +27,10 @@ on:
       DOCKERHUB_USERNAME:
         description: 'Docker username'
         required: true
+  push:
+    branches: [ main ]
+  
+  
 
   
 

@@ -19,7 +19,7 @@ jobs:
     secrets:
       SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
   
-  
+  # only run this job when it is pushed to main branch
   build_and_push_docker_image:
     needs: back_end_tests
     uses: ./.github/workflows/docker.yml
