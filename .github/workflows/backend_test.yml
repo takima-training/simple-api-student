@@ -2,7 +2,7 @@
 name: Backend tests
 
 on:
-  workflow_run:
+  workflow_call:
     inputs:
       project_key:
         description: 'Sonar project key'

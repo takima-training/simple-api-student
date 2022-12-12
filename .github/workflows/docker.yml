@@ -3,7 +3,7 @@
 name: Build and push docker image
 
 on:
-  workflow_run:
+  workflow_call:
     inputs:
       back_end_path:
         description: 'Path to the backend'
