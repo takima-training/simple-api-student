@@ -2,7 +2,7 @@ name: CI devops 2022
 on:
   #to begin you want to launch this job in main and develop
   push:
-    branches: [ origin, main, dev]
+    branches: [ origin, main ]
   pull_request:
 
 
@@ -23,6 +23,8 @@ jobs:
   # only run this job when it is pushed to main branch
   build_and_push_docker_image:
     needs: back_end_tests
+    # only run this job when it is pushed to main branch
+    if: github.ref == 'refs/heads/main':
     uses: ./.github/workflows/docker.yml
     with:
       back_end_path: '.'
