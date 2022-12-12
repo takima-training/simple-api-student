@@ -27,21 +27,11 @@ on:
       DOCKERHUB_USERNAME:
         description: 'Docker username'
         required: true
-<<<<<<< HEAD
-  workflow_run:
-    workflows: ["CI devops 2022"]
-    types:
-      - completed
-    push:
-      branches: [ origin, main ]
-
-=======
     workflow_run:
       workflows: ["CI devops 2022"]
       branches: [origin, main]
       types:
         - completed
->>>>>>> b96f37a (test)
 
   
 
