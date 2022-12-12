@@ -26,36 +26,36 @@ jobs:
   
   # define job to build and publish docker image
   build-and-push-docker-image:
-  needs: test-backend
-  # run only when code is compiling and tests are passing
-  runs-on: ubuntu-22.04
-  # steps to perform in job
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v2.5.0
+    needs: test-backend
+    # run only when code is compiling and tests are passing
+    runs-on: ubuntu-22.04
+    # steps to perform in job
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2.5.0
 
-    - name: Build image and push backend
-      uses: docker/build-push-action@v3
-      with:
-        # relative path to the place where source code with Dockerfile is located
-        context: ./simple-api-student
-        # Note: tags has to be all lower-case
-        tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops/simple-api-student
+      - name: Build image and push backend
+        uses: docker/build-push-action@v3
+        with:
+          # relative path to the place where source code with Dockerfile is located
+          context: ./simple-api-student
+          # Note: tags has to be all lower-case
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops/simple-api-student
 
-    - name: Build image and push database
-      uses: docker/build-push-action@v3
-      with:
-        # relative path to the place where source code with Dockerfile is located
-        context: ./simple-api-student/postgresql
-        # DO the same for database
-        tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops/simple-api-student/postgresql
+      - name: Build image and push database
+        uses: docker/build-push-action@v3
+        with:
+          # relative path to the place where source code with Dockerfile is located
+          context: ./simple-api-student/postgresql
+          # DO the same for database
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops/simple-api-student/postgresql
 
-    - name: Build image and push httpd
-      uses: docker/build-push-action@v3
-      with:
-        # relative path to the place where source code with Dockerfile is located
-        context: ./simple-api-student/httpd
+      - name: Build image and push httpd
+        uses: docker/build-push-action@v3
+        with:
+          # relative path to the place where source code with Dockerfile is located
+          context: ./simple-api-student/httpd
 
-        tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops/simple-api-student/httpd
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops/simple-api-student/httpd
 
-      # DO the same for httpd
+        # DO the same for httpd
