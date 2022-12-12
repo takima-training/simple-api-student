@@ -33,7 +33,6 @@ on:
       - completed
     push:
       branches: [ origin, main ]
-  
 
 
   
