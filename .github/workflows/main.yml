@@ -31,6 +31,9 @@ jobs:
     runs-on: ubuntu-22.04
     # steps to perform in job
     steps:
+      - name: Login to DockerHub
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+        
       - name: Checkout code
         uses: actions/checkout@v2.5.0
 
@@ -42,21 +45,30 @@ jobs:
           context: .
           # Note: tags has to be all lower-case
           tags:  ${{secrets.DOCKERHUB_USERNAME}}/simple-api-student
+          # push to dockerhub only when code is pushed to main branch
+          push: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Build image and push database
         uses: docker/build-push-action@v3
         with:
           # relative path to the place where source code with Dockerfile is located
-          context: ../postgresql
+          context: ./postgresql
           # DO the same for database
           tags:  ${{secrets.DOCKERHUB_USERNAME}}/postgresql
+
+          push: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Build image and push httpd
         uses: docker/build-push-action@v3
         with:
           # relative path to the place where source code with Dockerfile is located
-          context: ../http_server
+          context: ./http_server
 
           tags:  ${{secrets.DOCKERHUB_USERNAME}}/httpd
+
+          push: ${{ github.ref == 'refs/heads/main' }}
+
+
+
 
         # DO the same for httpd
