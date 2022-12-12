@@ -2,7 +2,7 @@ name: CI devops 2022
 on:
   #to begin you want to launch this job in main and develop
   push:
-    branches: [ origin, main ]
+    branches: [ origin, main, dev ]
   pull_request:
 
 
@@ -21,15 +21,15 @@ jobs:
       SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
   
   # only run this job when it is pushed to main branch
-  build_and_push_docker_image:
-    needs: back_end_tests
-    # only run this job when it is pushed to main branch
-    if github.ref == 'refs/heads/main':
-      uses: ./.github/workflows/docker.yml
-      with:
-        back_end_path: '.'
-        database_path: './postgresql'
-        httpd_server_path: './http_server'
-      secrets:
-        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  # build_and_push_docker_image:
+  #   needs: back_end_tests
+  #   # only run this job when it is pushed to main branch
+  #   # if github.ref == 'refs/heads/main':
+  #   uses: ./.github/workflows/docker.yml
+  #   with:
+  #     back_end_path: '.'
+  #     database_path: './postgresql'
+  #     httpd_server_path: './http_server'
+  #   secrets:
+  #     DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  #     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
