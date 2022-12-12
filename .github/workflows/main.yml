@@ -10,6 +10,7 @@ jobs:
 
   back_end_tests:
     uses: ./.github/workflows/backend_test.yml
+    id: back_end_tests
     with:
       project_key: 'JiaenLiu123_simple-api-student'
       organization: 'jiaenliu123'
