@@ -27,6 +27,9 @@ on:
       DOCKERHUB_USERNAME:
         description: 'Docker username'
         required: true
+  # only when code is pushed to main branch
+  push:
+    branches: [ main ]
 
   
 
