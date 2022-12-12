@@ -6,14 +6,17 @@ on:
   workflow_run:
     inputs:
       back_end_path:
+        type: string
         description: 'Path to the backend'
         default: '.'
         required: true
       database_path:
+        type: string
         description: 'Path to the database'
         default: './postgresql'
         required: true
       httpd_server_path:
+        type: string
         description: 'Path to the httpd server'
         default: './http_server'
         required: true

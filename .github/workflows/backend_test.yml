@@ -2,17 +2,20 @@
 name: Backend tests
 
 on:
-  workflow_run:
+  workflow_call:
     inputs:
       project_key:
+        type: string
         description: 'Sonar project key'
         default: 'JiaenLiu123_simple-api-student'
         required: true
       organization:
+        type: string
         description: 'Sonar organization'
         default: 'jiaenliu123'
         required: true
       pom_path:
+        type: string
         description: 'Path to the pom.xml'
         default: './pom.xml'
         required: true
