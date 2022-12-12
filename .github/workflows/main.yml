@@ -22,8 +22,7 @@ jobs:
 
      #finally build your app with the latest command
       - name: Build and test with Maven
-        run: mvn -B verify sonar:sonar -Dsonar.projectKey=devops-2022 -Dsonar.organization=devops-school -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./simple-api/pom.xml
-
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=JiaenLiu123_simple-api-student -Dsonar.organization=jiaenliu123 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./simple-api/pom.xml
   
   # define job to build and publish docker image
   build-and-push-docker-image:
@@ -34,7 +33,7 @@ jobs:
     steps:
       - name: Login to DockerHub
         run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-
+        
       - name: Checkout code
         uses: actions/checkout@v2.5.0
 
