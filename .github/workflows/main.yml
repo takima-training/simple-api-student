@@ -8,7 +8,7 @@ on:
 jobs:
   # Use the docker.yml file and the backend_test.yml file to do the CI/CD
   back_end_tests:
-    uses: ./.github/workflows/backend_test.yml
+    uses: ./.github/workflows/backend_test.yml@main
     with:
       project_key: 'JiaenLiu123_simple-api-student'
       organization: 'jiaenliu123'
@@ -17,7 +17,7 @@ jobs:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   
   build_and_push_docker_image:
-    uses: ./.github/workflows/docker.yml
+    uses: ./.github/workflows/docker.yml@main
     with:
       back_end_path: '.'
       database_path: './postgresql'
