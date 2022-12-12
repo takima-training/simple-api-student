@@ -25,12 +25,14 @@ on:
         required: true
     outputs:
       success:
-        description: 'True if the job succeeded'
-        value: ${{ steps.backend-tests.outputs.success }}
+        description: 'True if the tests passed'
+        value: ${{ jobs.backend-tests.outputs.output1}}
 
 jobs:
   backend-tests:
     runs-on: ubuntu-22.04
+    outputs:
+      output1: ${{ steps.set-output.outputs.output1 }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -42,7 +44,16 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
       
-      - name: Build and test with Maven
+      - name: Build_and_test_with_Maven
+        id: Build_and_test_with_Maven
         run: mvn -B verify sonar:sonar -Dsonar.projectKey= ${{inputs.project_key}} -Dsonar.organization=${{inputs.organization}} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ${{inputs.pom_path}}
+
+      - name: Set output
+        id: set-output
+        if : ${{ steps.Build_and_test_with_Maven.outcome == 'success' }}:
+          run: echo "output1=true" >> $GITHUB_OUTPUT
+        else:
+          run: echo "output1=false" >> $GITHUB_OUTPUT
+
 
   
