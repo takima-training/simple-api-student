@@ -6,69 +6,22 @@ on:
   pull_request:
 
 jobs:
-  test-backend: 
-    runs-on: ubuntu-22.04
-    steps:
-     #checkout your github code using actions/checkout@v2.5.0
-      - uses: actions/checkout@v2.5.0
-
-     #do the same with another action (actions/setup-java@v3) that enable to setup jdk 17
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: maven
-
-     #finally build your app with the latest command
-      - name: Build and test with Maven
-        run: mvn -B verify sonar:sonar -Dsonar.projectKey=JiaenLiu123_simple-api-student -Dsonar.organization=jiaenliu123 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./pom.xml
+  # Use the docker.yml file and the backend_test.yml file to do the CI/CD
+  back_end_tests:
+    uses: ./.github/workflows/backend_test.yml
+    with:
+      project_key: 'JiaenLiu123_simple-api-student'
+      organization: 'jiaenliu123'
+      pom_path: './pom.xml'
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   
-  # define job to build and publish docker image
-  build-and-push-docker-image:
-    needs: test-backend
-    # run only when code is compiling and tests are passing
-    runs-on: ubuntu-22.04
-    # steps to perform in job
-    steps:
-      - name: Login to DockerHub
-        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-        
-      - name: Checkout code
-        uses: actions/checkout@v2.5.0
-
-      - name: Build image and push backend
-        uses: docker/build-push-action@v3
-        with:
-          # relative path to the place where source code with Dockerfile is located
-          # the docker file is in the root of the project
-          context: .
-          # Note: tags has to be all lower-case
-          tags:  ${{secrets.DOCKERHUB_USERNAME}}/simple-api-student
-          # push to dockerhub only when code is pushed to main branch
-          push: ${{ github.ref == 'refs/heads/main' }}
-
-      - name: Build image and push database
-        uses: docker/build-push-action@v3
-        with:
-          # relative path to the place where source code with Dockerfile is located
-          context: ./postgresql
-          # DO the same for database
-          tags:  ${{secrets.DOCKERHUB_USERNAME}}/postgresql
-
-          push: ${{ github.ref == 'refs/heads/main' }}
-
-      - name: Build image and push httpd
-        uses: docker/build-push-action@v3
-        with:
-          # relative path to the place where source code with Dockerfile is located
-          context: ./http_server
-
-          tags:  ${{secrets.DOCKERHUB_USERNAME}}/httpd
-
-          push: ${{ github.ref == 'refs/heads/main' }}
-
-
-
-
-        # DO the same for httpd
+  build_and_push_docker_image:
+    uses: ./.github/workflows/docker.yml
+    with:
+      back_end_path: '.'
+      database_path: './postgresql'
+      httpd_server_path: './http_server'
+    secrets:
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}

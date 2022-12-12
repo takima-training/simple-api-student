@@ -1,0 +1,41 @@
+# This is the workflow for the backend tests
+name: Backend tests
+
+on:
+  workflow_run:
+    inputs:
+      project_key:
+        description: 'Sonar project key'
+        default: 'JiaenLiu123_simple-api-student'
+        required: true
+      organization:
+        description: 'Sonar organization'
+        default: 'jiaenliu123'
+        required: true
+      pom_path:
+        description: 'Path to the pom.xml'
+        default: './pom.xml'
+        required: true
+    secrets:
+      SONAR_TOKEN:
+        description: 'Sonar token'
+        required: true
+
+jobs:
+  backend-tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@2.5.0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+      
+      - name: Build and test with Maven
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey= ${{inputs.project_key}} -Dsonar.organization=${{inputs.organization}} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ${{inputs.pom_path}}
+
+  
