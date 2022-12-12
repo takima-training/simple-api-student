@@ -8,7 +8,7 @@ on:
         type: string
         description: 'Sonar project key'
         default: 'JiaenLiu123_simple-api-student'
-        required: true
+        required: false
       organization:
         type: string
         description: 'Sonar organization'
