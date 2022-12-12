@@ -24,7 +24,7 @@ jobs:
   build_and_push_docker_image:
     needs: back_end_tests
     # only run this job when it is pushed to main branch
-    if: github.ref == 'refs/heads/main':
+    if github.ref == 'refs/heads/main':
     uses: ./.github/workflows/docker.yml
     with:
       back_end_path: '.'
