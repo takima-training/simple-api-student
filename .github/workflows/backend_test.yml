@@ -23,6 +23,10 @@ on:
       SONAR_TOKEN:
         description: 'Sonar token'
         required: true
+    outputs:
+      success:
+        description: 'True if the job succeeded'
+        value: ${{ steps.backend-tests.outputs.success }}
 
 jobs:
   backend-tests:

@@ -4,9 +4,11 @@ on:
   push:
     branches: [ origin, main ]
   pull_request:
+    branches: [ origin, main ]
 
 jobs:
   # Use the docker.yml file and the backend_test.yml file to do the CI/CD
+
   back_end_tests:
     uses: ./.github/workflows/backend_test.yml
     with:
@@ -16,6 +18,7 @@ jobs:
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   
+  if ${{ back_end_tests.outputs.success }}}:
   build_and_push_docker_image:
     uses: ./.github/workflows/docker.yml
     with:
