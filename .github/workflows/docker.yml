@@ -3,7 +3,7 @@
 name: Build and push docker image
 
 on:
-  workflow_call:
+  workflow_run:
     inputs:
       back_end_path:
         description: 'Path to the backend'
@@ -24,6 +24,8 @@ on:
       DOCKERHUB_USERNAME:
         description: 'Docker username'
         required: true
+
+  
 
 jobs:
   build-and-push-docker-image:
