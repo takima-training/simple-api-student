@@ -48,12 +48,12 @@ jobs:
         id: Build_and_test_with_Maven
         run: mvn -B verify sonar:sonar -Dsonar.projectKey= ${{inputs.project_key}} -Dsonar.organization=${{inputs.organization}} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ${{inputs.pom_path}}
 
-      - name: Set output
-        id: set-output
-        if : ${{ steps.Build_and_test_with_Maven.outcome == 'success' }}:
-          run: echo "output1=true" >> $GITHUB_OUTPUT
-        else:
-          run: echo "output1=false" >> $GITHUB_OUTPUT
+      # - name: Set output
+      #   id: set-output
+      #   if : ${{ steps.Build_and_test_with_Maven.outcome == 'success' }}:
+      #     run: echo "output1=true" >> $GITHUB_OUTPUT
+      #   else:
+      #     run: echo "output1=false" >> $GITHUB_OUTPUT
 
 
   
