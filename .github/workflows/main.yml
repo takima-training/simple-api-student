@@ -25,11 +25,11 @@ jobs:
     needs: back_end_tests
     # only run this job when it is pushed to main branch
     if github.ref == 'refs/heads/main':
-    uses: ./.github/workflows/docker.yml
-    with:
-      back_end_path: '.'
-      database_path: './postgresql'
-      httpd_server_path: './http_server'
-    secrets:
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      uses: ./.github/workflows/docker.yml
+      with:
+        back_end_path: '.'
+        database_path: './postgresql'
+        httpd_server_path: './http_server'
+      secrets:
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
