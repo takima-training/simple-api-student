@@ -3,6 +3,7 @@ package fr.takima.training.sampleapplication.IT;
 import fr.takima.training.simpleapi.SimpleApiApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
@@ -22,7 +23,7 @@ class DepartmentControllerTestIT {
     @Test
     @Sql({"/InsertData.sql"})
     void testGetDepartmentByName() throws Exception {
-        mockMvc.perform(get("/departments/ASI/"))
+        mockMvc.perform(get("/departments/ASI"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", equalTo(1)))
                 .andExpect(jsonPath("name", equalTo("ASI")));
@@ -31,7 +32,7 @@ class DepartmentControllerTestIT {
     @Test
     @Sql({"/InsertData.sql"})
     void testGetNonExistingDepartmentByName() throws Exception {
-        mockMvc.perform(get("/departments/NIMPORTEQUOI/"))
+        mockMvc.perform(get("/departments/NIMPORTEQUOI"))
                 .andExpect(status().isNotFound());
     }
 

@@ -52,7 +52,7 @@ class StudentControllerTestIT {
                     }
                 }
                 """;
-        mockMvc.perform(post("/students/")
+        mockMvc.perform(post("/students")
                         .content(body)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
@@ -71,7 +71,7 @@ class StudentControllerTestIT {
                     }
                 }
                 """;
-        mockMvc.perform(post("/students/")
+        mockMvc.perform(post("/students")
                         .content(body)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -86,7 +86,7 @@ class StudentControllerTestIT {
                     }
                 }
                 """;
-        mockMvc.perform(post("/students/")
+        mockMvc.perform(post("/students")
                         .content(body)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());

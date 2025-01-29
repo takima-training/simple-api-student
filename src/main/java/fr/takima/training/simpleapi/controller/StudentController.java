@@ -21,7 +21,7 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping(value = "/")
+    @GetMapping
     public ResponseEntity<Object> getStudents() {
         return  ResponseEntity.ok(studentService.getAll());
     }
